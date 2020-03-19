@@ -84,4 +84,68 @@ public class ReportEngineTest {
                 .append(worker3.getSalary()).append(";");
         assertThat(engine.generate(em -> true, new SortedBySalaryReportHandler()), is(expect.toString()));
     }
+
+    @Test
+    public void whenHtmlGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Ivan", now, now, 100);
+        store.add(worker);
+        ReportEngine engine = new ReportEngine(store);
+        String worketHtml = String.format(
+                "<tr><td>?</td><td>?</td><td>?</td><td>?</td></tr>",
+                worker.getName(),
+                worker.getHired(),
+                worker.getFired(),
+                worker.getSalary()
+        );
+        StringBuilder expect = new StringBuilder()
+                .append("<!DOCTYPE HTML><html><head></head><body><table><thead>")
+                .append("<tr><td>Name</td><td>Hired</td><td>Fired</td><td>Salary</td></tr></thead>")
+                .append(worketHtml)
+                .append("</table></body></html>");
+        assertThat(engine.generate(em -> true, new HtmlReportHandler()), is(expect.toString()));
+    }
+
+    @Test
+    public void whenXmlGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Ivan", now, now, 100);
+        store.add(worker);
+        ReportEngine engine = new ReportEngine(store);
+        String worketHtml = String.format(
+                "<employer><name>?</name><hired>?</hired><fired>?</fired><salary?</salary></employer>",
+                worker.getName(),
+                worker.getHired(),
+                worker.getFired(),
+                worker.getSalary()
+        );
+        StringBuilder expect = new StringBuilder()
+                .append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><employers>")
+                .append(worketHtml)
+                .append("</employers>");
+        assertThat(engine.generate(em -> true, new XMLHandlerReport()), is(expect.toString()));
+    }
+
+    @Test
+    public void whenJsonGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Ivan", now, now, 100);
+        store.add(worker);
+        ReportEngine engine = new ReportEngine(store);
+        String worketHtml = String.format(
+                "{ \"name\": \"?\", \"hired\": ?, \"fired\": ?, \"salary\": ? }",
+                worker.getName(),
+                worker.getHired(),
+                worker.getFired(),
+                worker.getSalary()
+        );
+        StringBuilder expect = new StringBuilder()
+                .append("\"employers\": [ ")
+                .append(worketHtml)
+                .append(" ]");
+        assertThat(engine.generate(em -> true, new JSONHandlerReport()), is(expect.toString()));
+    }
 }
