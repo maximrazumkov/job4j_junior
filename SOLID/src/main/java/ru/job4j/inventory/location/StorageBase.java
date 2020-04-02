@@ -15,6 +15,11 @@ public abstract class StorageBase<T> implements Storeg<T> {
 
     @Override
     public void add(T item) {
-        this.items.add(item);
+        items.add(item);
+    }
+
+    @Override
+    public List<T> findAll() {
+        return items;
     }
 }

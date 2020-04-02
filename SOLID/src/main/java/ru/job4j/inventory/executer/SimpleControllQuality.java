@@ -1,8 +1,10 @@
 package ru.job4j.inventory.executer;
 
+import ru.job4j.design.Store;
 import ru.job4j.inventory.food.Food;
 import ru.job4j.inventory.location.Storeg;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleControllQuality implements ControllQuality<Food> {
@@ -22,5 +24,14 @@ public class SimpleControllQuality implements ControllQuality<Food> {
                 }
             }
         }
+    }
+
+    @Override
+    public void reset() {
+        List<Food> allFood = new ArrayList<>();
+        for (Storeg<Food> storeg : storegs) {
+            allFood.addAll(storeg.findAll());
+        }
+        distribute(allFood);
     }
 }

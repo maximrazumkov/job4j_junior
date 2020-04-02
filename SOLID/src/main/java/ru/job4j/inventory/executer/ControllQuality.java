@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface ControllQuality<T> {
     void distribute(List<T> items);
+    void reset();
 }
