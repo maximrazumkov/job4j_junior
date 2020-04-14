@@ -1,9 +1,6 @@
 package ru.job4j.menu;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class SimpleMenu implements Menu {
 
@@ -27,6 +24,23 @@ public class SimpleMenu implements Menu {
             result = itr.next();
         }
         return result;
+    }
+
+    @Override
+    public void add(int pareneID, Element element) {
+        Queue<Element> data = new LinkedList<>(menu);
+        int i = 1;
+        while (!data.isEmpty()) {
+            Element elem = data.poll();
+            if (i++ == pareneID) {
+                elem.getChildren().add(element);
+                break;
+            } else {
+                for (Element elemChildren : elem.getChildren()) {
+                    data.add(elemChildren);
+                }
+            }
+        }
     }
 
     private class ElementIterator implements Iterator<Element> {
