@@ -32,4 +32,27 @@ public class Price {
                 ", value=" + value +
                 '}';
     }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + code;
+        result = 31 * result + value;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return false;
+        }
+
+        if (o instanceof Price) {
+            Price price = (Price) o;
+            return (price.code == this.code)
+                    && (price.value == this.value);
+        }
+
+        return false;
+    }
 }

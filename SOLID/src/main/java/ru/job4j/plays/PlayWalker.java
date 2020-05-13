@@ -16,6 +16,13 @@ public class PlayWalker implements Play {
 
     @Override
     public void run() {
-
+        Player currPlayer;
+        int i = 0;
+        int size = players.size();
+        do {
+            i = (i == size) ? 0 : i;
+            currPlayer = players.get(i++);
+            map.move(currPlayer, dice.throwDice());
+        } while (!map.isWin());
     }
 }

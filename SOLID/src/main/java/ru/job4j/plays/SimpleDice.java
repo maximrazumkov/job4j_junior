@@ -5,6 +5,6 @@ import java.util.Random;
 public class SimpleDice implements Dice {
     @Override
     public int throwDice() {
-        return 0;
+        return new Random().nextInt(6) + 1;
     }
 }
