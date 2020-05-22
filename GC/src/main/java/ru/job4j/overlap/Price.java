@@ -37,7 +37,6 @@ public class Price {
     public int hashCode() {
         int result = 17;
         result = 31 * result + code;
-        result = 31 * result + value;
         return result;
     }
 
@@ -49,8 +48,7 @@ public class Price {
 
         if (o instanceof Price) {
             Price price = (Price) o;
-            return (price.code == this.code)
-                    && (price.value == this.value);
+            return (price.code == this.code);
         }
 
         return false;

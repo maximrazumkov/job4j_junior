@@ -4,7 +4,9 @@ import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Fork(value = 2, warmups = 2)
 @BenchmarkMode(Mode.AverageTime)
@@ -22,8 +24,9 @@ public class Overlap {
     }
 
     public List<Price> overlapPrice(List<? extends Price> currPrice, List<? extends Price> newPrice) {
-        List<Price> result = new ArrayList<>(currPrice);
-        result.addAll(newPrice);
+        Set<Price> currSetPrice = new HashSet<>(currPrice);
+        currSetPrice.addAll(newPrice);
+        List<Price> result = new ArrayList<>(currSetPrice);;
         result.sort((o1, o2) -> {
             int res = o2.getCode() - o1.getCode();
             if (res == 0) {
